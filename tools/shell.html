@@ -77,12 +77,23 @@ function show(p) {
 }
 
 function initCue() {
-  const c = document.querySelector('.scroll-cue');
-  if (!c) return;
-  const f = () => c.classList.toggle('hide', window.scrollY > 30);
+  const dn = document.querySelector('.scroll-cue.down'), up = document.querySelector('.scroll-cue.up');
+  if (!dn || !up) return;
+  const f = () => {
+    const y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
+    dn.classList.toggle('hide', y >= max - 8);
+    up.classList.toggle('hide', y < 30);
+  };
   window.addEventListener('scroll', f, { passive: true });
-  c.addEventListener('click', () => { const w = document.querySelector('.wrap'); if (w) w.scrollIntoView({ behavior: 'smooth' }); });
-  f();
+  window.addEventListener('resize', f);
+  window.addEventListener('load', f);
+  dn.addEventListener('click', () => {
+    const w = document.querySelector('.wrap');
+    if (w && window.scrollY < w.offsetTop - 60) w.scrollIntoView({ behavior: 'smooth' });
+    else window.scrollBy({ top: Math.round(window.innerHeight * 0.8), behavior: 'smooth' });
+  });
+  up.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  f(); setTimeout(f, 400);
 }
 
 function startCountdown() {
