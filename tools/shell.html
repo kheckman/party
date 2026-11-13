@@ -73,6 +73,16 @@ function show(p) {
   app.hidden = false;
   window.scrollTo(0, 0);
   startCountdown();
+  initCue();
+}
+
+function initCue() {
+  const c = document.querySelector('.scroll-cue');
+  if (!c) return;
+  const f = () => c.classList.toggle('hide', window.scrollY > 30);
+  window.addEventListener('scroll', f, { passive: true });
+  c.addEventListener('click', () => { const w = document.querySelector('.wrap'); if (w) w.scrollIntoView({ behavior: 'smooth' }); });
+  f();
 }
 
 function startCountdown() {
