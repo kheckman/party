@@ -21,7 +21,7 @@ if (mode === 'build') {
   const read = f => readFileSync(join(a, f), 'utf8');
   const hero = 'data:image/jpeg;base64,' + readFileSync(join(a, 'hero.jpg')).toString('base64');
   const rsvp = formUrl
-    ? `<a class="btn big" href="${formUrl}" target="_blank" rel="noopener">RSVP now</a><p class="rsvp-note">Opens a short form. You'll need the secret code again.</p>`
+    ? `<a class="btn big" href="${formUrl}" target="_blank" rel="noopener">RSVP now</a><p class="rsvp-note">Opens a short form in a new tab.</p>`
     : `<span class="btn big off" aria-disabled="true">RSVP opens soon</span>`;
   const payload = { title: read('title.txt').trim(), css: read('content.css'), html: read('content.html').replace('{{HERO}}', hero).replace('{{RSVP}}', rsvp) };
   const salt = c.getRandomValues(new Uint8Array(16)), iv = c.getRandomValues(new Uint8Array(12));
