@@ -1,7 +1,7 @@
 // Encrypts the invitation into a single index.html, or decrypts a published one.
 //   PARTY_CODE=... node build.mjs build <srcDir> <out.html> [formUrl]
 //   PARTY_CODE=... node build.mjs open  <index.html> <outDir>
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { webcrypto as c } from 'node:crypto';
 import { join } from 'node:path';
 
@@ -19,11 +19,15 @@ const [mode, a, b, formUrl] = process.argv.slice(2);
 
 if (mode === 'build') {
   const read = f => readFileSync(join(a, f), 'utf8');
-  const hero = 'data:image/jpeg;base64,' + readFileSync(join(a, 'hero.jpg')).toString('base64');
+  const img = f => 'data:image/jpeg;base64,' + readFileSync(join(a, f)).toString('base64');
+  const alt = read('alt.txt').trim();
+  const bg = existsSync(join(a, 'hero-wide.jpg'))
+    ? `<div class="bg"><img class="wide" src="${img('hero-wide.jpg')}" alt="${alt}"><img class="tall" src="${img('hero.jpg')}" alt="${alt}"></div>`
+    : `<div class="bg fb"><img class="blur" src="${img('hero.jpg')}" alt=""><img class="tall" src="${img('hero.jpg')}" alt="${alt}"></div>`;
   const rsvp = formUrl
     ? `<a class="btn big" href="${formUrl}" target="_blank" rel="noopener">RSVP now</a><p class="rsvp-note">Opens a short form in a new tab.</p>`
     : `<span class="btn big off" aria-disabled="true">RSVP opens soon</span>`;
-  const payload = { title: read('title.txt').trim(), css: read('content.css'), html: read('content.html').replace('{{HERO}}', hero).replace('{{RSVP}}', rsvp) };
+  const payload = { title: read('title.txt').trim(), css: read('content.css'), html: read('content.html').replace('{{BG}}', () => bg).replace('{{RSVP}}', () => rsvp) };
   const salt = c.getRandomValues(new Uint8Array(16)), iv = c.getRandomValues(new Uint8Array(12));
   const data = await c.subtle.encrypt({ name: 'AES-GCM', iv }, await key(salt, ITER), new TextEncoder().encode(JSON.stringify(payload)));
   const B = u => Buffer.from(u).toString('base64');
