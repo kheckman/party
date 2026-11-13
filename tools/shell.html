@@ -5,10 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Party Invite</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/pixelify-sans.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  @font-face{font-family:"Pixelify Sans";src:url("fonts/pixelify-sans.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
   *,*::before,*::after{box-sizing:border-box}
   html,body{margin:0;min-height:100%}
   body{background:#14161c;color:#f2f2ea;font-family:"Pixelify Sans",system-ui,sans-serif;font-size:18px;line-height:1.5}
@@ -19,12 +18,12 @@
       repeating-linear-gradient(90deg,#7a5234 0 32px,#6b472c 32px 64px) bottom/100% 64px no-repeat;}
   .card{width:100%;max-width:420px;background:#2a2d36;border:4px solid #0b0c10;
     box-shadow:inset 4px 4px 0 #454a57,inset -4px -4px 0 #1b1d24,0 8px 0 #0b0c10;padding:28px 24px;text-align:center}
-  .card h1{font-family:"Press Start 2P",monospace;font-size:16px;line-height:1.7;margin:0 0 12px;color:#ffe066}
+  .card h1{font-family:"Pixelify Sans",system-ui,sans-serif;font-weight:700;font-size:26px;line-height:1.3;margin:0 0 12px;color:#ffe066}
   .card p{margin:0 0 20px;color:#c9ccd6}
   .card input{width:100%;padding:14px 12px;font:inherit;font-size:20px;text-align:center;color:#f2f2ea;background:#0f1116;
     border:4px solid #0b0c10;box-shadow:inset 3px 3px 0 #000;outline:none;letter-spacing:1px}
   .card input:focus{border-color:#ffe066}
-  .btn{display:inline-block;width:100%;margin-top:14px;padding:16px 12px;font-family:"Press Start 2P",monospace;font-size:13px;
+  .btn{display:inline-block;width:100%;margin-top:14px;padding:16px 12px;font-family:"Pixelify Sans",system-ui,sans-serif;font-weight:700;font-size:22px;
     text-align:center;color:#10210a;background:#6cc04a;border:4px solid #0b0c10;cursor:pointer;text-decoration:none;
     box-shadow:inset 4px 4px 0 #9be07c,inset -4px -4px 0 #3f8a27}
   .btn:hover{background:#7bd157}.btn:active{box-shadow:inset -4px -4px 0 #9be07c,inset 4px 4px 0 #3f8a27}
